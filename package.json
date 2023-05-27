@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "the test task of Appgain.io",
   "main": "build/index",
+  "engines": {
+    "node": ">=14 <15"
+  },
   "scripts": {
     "build": "tsc",
     "start": "node build/index",
