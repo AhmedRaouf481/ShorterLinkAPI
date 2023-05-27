@@ -4,6 +4,7 @@
   "description": "the test task of Appgain.io",
   "main": "build/index",
   "scripts": {
+    "build": "tsc",
     "start": "node build/index",
     "dev": "concurrently \"npx tsc -w\" \"nodemon build/src/app.js\""
   },
