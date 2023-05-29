@@ -9,9 +9,9 @@ export class ShortLinkServices {
     })
     private postSchema = Joi.object({
         slug: Joi.string().allow(''),
-        web: Joi.string().uri().required(),
         ios: this.mobilelinksPostSchema,
-        android: this.mobilelinksPostSchema
+        android: this.mobilelinksPostSchema,
+        web: Joi.string().uri().required()
     })
 
     // Update Schema
@@ -20,9 +20,9 @@ export class ShortLinkServices {
         fallback: Joi.string().uri()
     })
     private updateSchema = Joi.object({
-        web: Joi.string().uri(),
         ios: this.mobilelinksUpdateSchema,
-        android: this.mobilelinksUpdateSchema
+        android: this.mobilelinksUpdateSchema,
+        web: Joi.string().uri(),
     })
 
     public validate = (input: any, update: boolean = false) => {

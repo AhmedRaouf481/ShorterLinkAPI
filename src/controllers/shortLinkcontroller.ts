@@ -115,7 +115,7 @@ export class ShortLinkController {
                 return res.status(404).json({ err: { msg: "Not found!" } })
             }
 
-            return res.status(200).json({ msg: "Updated Successfully!" })
+            return res.status(200).json({ msg: "Updated Successfully!", shortlink: (process.env.HOST as string) + slug })
         } catch (err: any) {
             console.log(err);
             return res.status(err?.statusCode ? err.statusCode : 500).json({ err })
