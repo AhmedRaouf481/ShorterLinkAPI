@@ -3,12 +3,14 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import { router as shortlink } from "./routes/shortLinkRouter";
 import useragent from "express-useragent";
+import cors from "cors";
 
 
 dotenv.config()
 
 const app: Express = express();
 
+app.use(cors());
 app.use(useragent.express())
 
 app.use(express.urlencoded({ extended: true }));
