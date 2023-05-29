@@ -8,7 +8,7 @@ export class ShortLinkServices {
         fallback: Joi.string().uri().required()
     })
     private postSchema = Joi.object({
-        slug: Joi.string(),
+        slug: Joi.string().allow(''),
         web: Joi.string().uri().required(),
         ios: this.mobilelinksPostSchema,
         android: this.mobilelinksPostSchema

@@ -1,5 +1,5 @@
 import express from "express";
-import { ShortLinkController } from "../controllers/shortLinkcontroller";
+import { ShortLinkController } from "../controllers/shortLinkController";
 
 const router = express.Router()
 

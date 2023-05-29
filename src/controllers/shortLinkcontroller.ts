@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import ShortLink from "../models/ShortLink";
-import { ShortLinkServices } from "../servicess/shortLinkservices";
+import { ShortLinkServices } from "../servicess/shortLinkServices";
 import { nanoid } from "nanoid";
 import axios from "axios";
 
@@ -13,7 +13,7 @@ export class ShortLinkController {
 
             const { slug } = req.params
             const shortLink = await ShortLink.findOne({ slug })
-            if (!shortLink) return res.status(400).send({ err: "Not found!" });
+            if (!shortLink) return res.status(400).send({ err: { msg: "Not found!" } });
 
             const useragent = req.useragent
 
@@ -39,10 +39,10 @@ export class ShortLinkController {
                 return res.redirect(shortLink.web)
             }
 
-        } catch (err) {
+        } catch (err: any) {
             console.log(err);
 
-            return res.status(500).json({ err });
+            return res.status(err?.statusCode ? err.statusCode : 500).json({ err })
         }
     }
 
@@ -55,10 +55,10 @@ export class ShortLinkController {
                 allLinks.push(process.env.HOST + link.slug)
             })
             return res.status(201).json({ allLinks })
-        } catch (err) {
+        } catch (err: any) {
             console.log(err);
 
-            return res.status(500).json({ err });
+            return res.status(err?.statusCode ? err.statusCode : 500).json({ err })
         }
     }
 
@@ -76,17 +76,17 @@ export class ShortLinkController {
             // check if the slug is unique
             const existShortlink = await ShortLink.findOne({ slug: shortlink.slug })
             if (existShortlink) {
-                return res.status(400).json({ err: "slug must be uniqe" })
+                return res.status(400).json({ err: { msg: "slug must be uniqe" } })
             }
 
             const newShortLink = new ShortLink(shortlink)
             await newShortLink.save()
 
             return res.status(201).json({ shortlink: process.env.HOST + newShortLink.slug })
-        } catch (err) {
+        } catch (err: any) {
             console.log(err);
 
-            return res.status(500).json({ err });
+            return res.status(err?.statusCode ? err.statusCode : 500).json({ err })
         }
     }
 
@@ -112,13 +112,13 @@ export class ShortLinkController {
 
             //return error if there is no link with given slug 
             if (!shortlink) {
-                return res.status(404).json({ err: "Not Found!" })
+                return res.status(404).json({ err: { msg: "Not found!" } })
             }
 
             return res.status(200).json({ msg: "Updated Successfully!" })
-        } catch (err) {
+        } catch (err: any) {
             console.log(err);
-            res.status(500).json({ err });
+            return res.status(err?.statusCode ? err.statusCode : 500).json({ err })
         }
     }
 
